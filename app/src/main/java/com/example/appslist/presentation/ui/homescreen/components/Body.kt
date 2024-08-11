@@ -1,10 +1,7 @@
 package com.example.appslist.presentation.ui.homescreen.components
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -14,18 +11,14 @@ import com.example.appslist.R
 
 @Composable
 fun Body(modifier: Modifier, title: String, icon: Int, editorsChoice: List<String>, allItems: List<String>) {
-    Column(modifier.fillMaxSize()) {
+    Column(modifier.fillMaxSize().padding(start = 16.dp)) {
+        HeaderZone(Modifier.weight(0.1f), title, icon)
         // Editors Choice Zone
-        Box(Modifier.fillMaxSize().weight(0.6f).padding(16.dp)) {
-            HighlightedZone(title, icon, editorsChoice)
-        }
+        HighlightedZone(Modifier.weight(0.3f), editorsChoice)
 
-        // Spacer to separate sections
-        Spacer(Modifier.height(40.dp))
+        HeaderZone(Modifier.weight(0.1f), title, icon)
 
-        Box(Modifier.fillMaxSize().weight(0.4f).padding(start = 16.dp)) {
-            AllItemsZone(title, icon, editorsChoice)
-        }
+        AllItemsZone(Modifier.weight(0.4f), allItems)
     }
 }
 

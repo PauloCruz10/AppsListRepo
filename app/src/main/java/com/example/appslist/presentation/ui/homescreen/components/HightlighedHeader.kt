@@ -1,10 +1,7 @@
 package com.example.appslist.presentation.ui.homescreen.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
@@ -16,15 +13,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.appslist.R
-import com.example.appslist.ui.theme.LightGrey
-import com.example.appslist.ui.theme.lightGreen
 
 @Composable
-fun HeaderZone(text: String, icon: Int) {
+fun HeaderZone(modifier: Modifier, text: String, icon: Int) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(60.dp),
+        modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
@@ -43,5 +36,5 @@ fun HeaderZone(text: String, icon: Int) {
 @Preview(showBackground = true)
 @Composable
 fun previewHeaderZone() {
-    HeaderZone(text = "This is an header test", icon = R.drawable.ic_account)
+    HeaderZone(Modifier, text = "This is an header test", icon = R.drawable.ic_account)
 }

@@ -1,6 +1,5 @@
 package com.example.appslist.presentation.ui.homescreen.components
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -8,11 +7,9 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.ComposeCompilerApi
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -23,7 +20,11 @@ import com.example.appslist.ui.theme.Typography
 
 @Composable
 fun HighLightedCard(item: AppItem) {
-    OrientationAwareCard {
+    Card(
+        modifier = Modifier.width(300.dp).fillMaxHeight().padding(end = 16.dp),
+        shape = RoundedCornerShape(6.dp),
+        elevation = CardDefaults.cardElevation(4.dp)
+    ) {
         Box(
             modifier = Modifier.fillMaxSize()
         ) {
@@ -64,25 +65,6 @@ fun HighLightedCard(item: AppItem) {
     }
 }
 
-@Composable
-fun OrientationAwareCard(content: @Composable ColumnScope.() -> Unit) {
-    val configuration = LocalConfiguration.current
-    val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-    if (isLandscape) {
-        Card(
-            modifier = Modifier.height(300.dp).fillMaxWidth().padding(end = 16.dp),
-            shape = RoundedCornerShape(6.dp),
-            elevation = CardDefaults.cardElevation(4.dp)
-        ) { content()}
-    } else {
-        Card(
-            modifier = Modifier.width(300.dp).fillMaxHeight().padding(end = 16.dp),
-            shape = RoundedCornerShape(6.dp),
-            elevation = CardDefaults.cardElevation(4.dp)
-        ) { content()}
-    }
-
-}
 @Preview
 @Composable
 fun previewHighLightedCard() {

@@ -40,7 +40,7 @@ fun ItemCard(item: AppItem) {
                 model = item.image,
                 contentDescription = null,
                 contentScale = ContentScale.FillBounds,
-                placeholder = painterResource(R.drawable.ic_default_preview),
+                placeholder = painterResource(R.drawable.ic_account),
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight(0.6f)
