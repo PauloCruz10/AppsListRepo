@@ -23,3 +23,4 @@ rootProject.name = "AppsList"
 include(":app")
 include(":app:data")
 include(":data")
+include(":shareddata")

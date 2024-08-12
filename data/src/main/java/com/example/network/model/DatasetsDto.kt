@@ -3,6 +3,6 @@ package com.example.network.model
 import com.google.gson.annotations.SerializedName
 
 
-data class Datasets (
-  @SerializedName("all" ) var all : All? = All()
+data class DatasetsDto (
+  @SerializedName("all" ) var all : AllDto? = AllDto()
 )

@@ -20,17 +20,22 @@ import coil.compose.AsyncImage
 import com.example.appslist.model.AppItem
 import com.example.appslist.R
 import com.example.appslist.ui.theme.Typography
+import com.example.appslist.ui.theme.marginNormal
+import com.example.appslist.ui.theme.marginSmall
+import com.example.appslist.ui.theme.marginxSmall
+import com.example.appslist.ui.theme.marginxxSmall
 
 @Composable
-fun ItemCard(item: AppItem) {
+fun ItemCard(item: AppItem, onAppClick: (id: Long) -> Unit) {
     Card(
+        onClick = { onAppClick(item.id) },
         modifier = Modifier
             .height(180.dp)
             .width(140.dp)
-            .padding(end = 16.dp)
-            .border(width = 1.dp, color = Color.LightGray, shape = RoundedCornerShape(8.dp)),
-        shape = RoundedCornerShape(8.dp),
-        elevation = CardDefaults.cardElevation(4.dp),
+            .padding(end = marginNormal)
+            .border(width = 1.dp, color = Color.LightGray, shape = RoundedCornerShape(marginSmall)),
+        shape = RoundedCornerShape(marginSmall),
+        elevation = CardDefaults.cardElevation(marginxxSmall),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Box(
@@ -45,32 +50,31 @@ fun ItemCard(item: AppItem) {
                     .fillMaxWidth()
                     .fillMaxHeight(0.6f)
                     .align(Alignment.TopStart)
-                    .padding(8.dp)
-                    .clip(RoundedCornerShape(6.dp))
-                // Adjust color filter as needed
+                    .padding(marginSmall)
+                    .clip(RoundedCornerShape(marginxSmall))
             )
             Column(
                 modifier = Modifier
                     .align(Alignment.BottomStart)
-                    .padding(8.dp)
+                    .padding(marginSmall)
             ) {
                 Text(
                     text = item.name,
                     modifier = Modifier
                         .align(Alignment.Start)
-                        .padding(4.dp)
+                        .padding(marginxxSmall)
                 )
 
                 Row {
                     Icon(
-                        modifier = Modifier.padding(end = 4.dp),
+                        modifier = Modifier.padding(end = marginxxSmall),
                         painter = painterResource(id = item.icon),
                         contentDescription = null
                     )
 
                     Text(
                         text = item.name,
-                        modifier = Modifier.padding(top = 4.dp),
+                        modifier = Modifier.padding(top = marginxxSmall),
                         style = Typography.labelSmall
                     )
                 }
@@ -84,10 +88,11 @@ fun ItemCard(item: AppItem) {
 fun previewItemCard() {
     ItemCard(
         item = AppItem(
+            1,
             "Test",
             "https://pool.img.aptoide.com/catappult/1406ca2b9502fdccb366724e2f5b20e0_fgraphic.png",
             R.drawable.ic_star,
-            2.2f
+            "2.2"
         )
-    )
+    ) {}
 }

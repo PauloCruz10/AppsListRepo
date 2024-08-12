@@ -7,18 +7,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.appslist.R
 import com.example.appslist.model.AppItem
+import com.example.shareddata.model.appsList.AppInfo
 
 @Composable
-fun HighlightedZone(modifier: Modifier, editorsChoiceItems: List<String>) {
+fun HighlightedZone(modifier: Modifier, editorsChoiceItems: List<AppInfo>, onAppClick: (id: Long) -> Unit) {
     LazyRow(modifier = modifier) {
         items(editorsChoiceItems) { item ->
             HighLightedCard(
                 AppItem(
-                    "Test",
-                    "https://pool.img.aptoide.com/sf49ers/0a47ec8d1bd84f964e34f5bf93df58ca_fgraphic.png",
+                    item.id ?: -1,
+                    item.name.orEmpty(),
+                    item.graphic.orEmpty(),
                     R.drawable.ic_star,
-                    2.2f
-                )
+                    item.rating.orEmpty()
+                ),
+                onAppClick,
             )
         }
     }
@@ -27,6 +30,6 @@ fun HighlightedZone(modifier: Modifier, editorsChoiceItems: List<String>) {
 @Preview(showBackground = true)
 @Composable
 fun previvewHighlightedZone() {
-    HighlightedZone(Modifier, listOf("Test1", "Test2", "Test3"))
+    HighlightedZone(Modifier, listOf(AppInfo(1, "ola"))) {}
 }
 

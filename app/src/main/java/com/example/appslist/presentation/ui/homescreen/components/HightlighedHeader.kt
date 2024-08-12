@@ -13,6 +13,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.appslist.R
+import com.example.appslist.ui.theme.marginNormal
 
 @Composable
 fun HeaderZone(modifier: Modifier, text: String, icon: Int) {
@@ -22,11 +23,11 @@ fun HeaderZone(modifier: Modifier, text: String, icon: Int) {
     ) {
         Text(
             text = text,
-            modifier = Modifier.weight(1f).padding(end = 16.dp)
+            modifier = Modifier.weight(1f).padding(end = marginNormal)
         )
-        Spacer(modifier = Modifier.width(16.dp))
+        Spacer(modifier = Modifier.width(marginNormal))
         Icon(
-            modifier = Modifier.padding(end = 16.dp),
+            modifier = Modifier.padding(end = marginNormal),
             painter = painterResource(id = icon),
             contentDescription = null
         )

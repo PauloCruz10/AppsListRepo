@@ -2,9 +2,9 @@ package com.example.network.model
 
 import com.google.gson.annotations.SerializedName
 
-data class List(
+data class ListDto(
 
-    @SerializedName("id") var id: Int? = null,
+    @SerializedName("id") var id: Long? = null,
     @SerializedName("name") var name: String? = null,
     @SerializedName("package") var appPackage: String? = null,
     @SerializedName("store_id") var storeId: Int? = null,

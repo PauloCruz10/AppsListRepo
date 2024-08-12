@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.example.appslist.R
 import com.example.appslist.ui.theme.AppListTheme
 import com.example.appslist.ui.theme.lightGreen
+import com.example.appslist.ui.theme.marginxSmall
 import com.example.appslist.ui.theme.oliveGreen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -47,7 +48,7 @@ fun TopBar(
             ) {
                 IconButton(
                     onClick = {},
-                    modifier = Modifier.padding(start = 6.dp)
+                    modifier = Modifier.padding(start = marginxSmall)
                 ) {
                     Icon(
                         painter = painterResource(leftIconResId),

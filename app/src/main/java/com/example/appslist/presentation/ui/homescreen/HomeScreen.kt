@@ -10,13 +10,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.appslist.R
 import com.example.appslist.presentation.ui.homescreen.components.Body
 import com.example.appslist.presentation.ui.homescreen.components.TopBar
 
 @Composable
-fun HomeScreen( homeViewModel: HomeViewModel = hiltViewModel()) {
+fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel(), onAppSelected: (id: Long) -> Unit = {}) {
     val context = LocalContext.current
+    val appsList = homeViewModel.listAppApps.collectAsStateWithLifecycle()
+    val highlighted = appsList.value.dropLast(5)
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         containerColor = Color.White,
@@ -27,7 +31,7 @@ fun HomeScreen( homeViewModel: HomeViewModel = hiltViewModel()) {
                 })
         }) { innerPadding ->
 
-        Body(Modifier.padding(innerPadding), "Highlighted", R.drawable.ic_account, listOf("ola", "batatas", "couves"), listOf("cenas", "dude", "mano"))
+        Body(Modifier.padding(innerPadding), "Highlighted", R.drawable.ic_account, highlighted, appsList.value, onAppSelected)
     }
 }
 

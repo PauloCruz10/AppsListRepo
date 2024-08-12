@@ -8,9 +8,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.appslist.R
 import com.example.appslist.model.AppItem
+import com.example.shareddata.model.appsList.AppInfo
 
 @Composable
-fun AllItemsZone(modifier: Modifier, editorsChoiceItems: List<String>) {
+fun AllItemsZone(modifier: Modifier, editorsChoiceItems: List<AppInfo>, onAppClick: (id: Long) -> Unit) {
     LazyRow(
         modifier = modifier,
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -18,11 +19,13 @@ fun AllItemsZone(modifier: Modifier, editorsChoiceItems: List<String>) {
         items(editorsChoiceItems) { item ->
             ItemCard(
                 AppItem(
-                    "Test",
-                    "https://pool.img.aptoide.com/sf49ers/0a47ec8d1bd84f964e34f5bf93df58ca_fgraphic.png",
+                    item.id ?: -1,
+                    item.name.orEmpty(),
+                    item.graphic.orEmpty(),
                     R.drawable.ic_star,
-                    2.2f
-                )
+                    item.rating.orEmpty()
+                ),
+                onAppClick,
             )
         }
     }
@@ -31,5 +34,5 @@ fun AllItemsZone(modifier: Modifier, editorsChoiceItems: List<String>) {
 @Preview(showBackground = true)
 @Composable
 fun previvewAllItemsZone() {
-    AllItemsZone(Modifier, listOf("Test1", "Test2", "Test3", "Test4", "Test5", "Test6"))
+    AllItemsZone(Modifier, emptyList()) { }
 }

@@ -17,13 +17,21 @@ import coil.compose.AsyncImage
 import com.example.appslist.model.AppItem
 import com.example.appslist.R
 import com.example.appslist.ui.theme.Typography
+import com.example.appslist.ui.theme.marginNormal
+import com.example.appslist.ui.theme.marginSmall
+import com.example.appslist.ui.theme.marginxSmall
+import com.example.appslist.ui.theme.marginxxSmall
 
 @Composable
-fun HighLightedCard(item: AppItem) {
+fun HighLightedCard(item: AppItem, onAppClick: (id: Long) -> Unit) {
     Card(
-        modifier = Modifier.width(300.dp).fillMaxHeight().padding(end = 16.dp),
-        shape = RoundedCornerShape(6.dp),
-        elevation = CardDefaults.cardElevation(4.dp)
+        onClick = { onAppClick(item.id) },
+        modifier = Modifier
+            .width(300.dp)
+            .fillMaxHeight()
+            .padding(end = marginNormal),
+        shape = RoundedCornerShape(marginxSmall),
+        elevation = CardDefaults.cardElevation(marginxxSmall),
     ) {
         Box(
             modifier = Modifier.fillMaxSize()
@@ -39,7 +47,7 @@ fun HighLightedCard(item: AppItem) {
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier
                     .align(Alignment.BottomStart)
-                    .padding(start = 8.dp, bottom = 8.dp)
+                    .padding(start = marginSmall, bottom = marginSmall)
             ) {
                 Text(
                     text = item.name,
@@ -48,14 +56,14 @@ fun HighLightedCard(item: AppItem) {
 
                 Row {
                     Icon(
-                        modifier = Modifier.padding(end = 4.dp),
+                        modifier = Modifier.padding(end = marginxxSmall),
                         painter = painterResource(id = item.icon),
                         contentDescription = null
                     )
 
                     Text(
                         text = item.name,
-                        modifier = Modifier.padding(top = 4.dp),
+                        modifier = Modifier.padding(top = marginxxSmall),
                         style = Typography.labelSmall
                     )
                 }
@@ -70,10 +78,11 @@ fun HighLightedCard(item: AppItem) {
 fun previewHighLightedCard() {
     HighLightedCard(
         item = AppItem(
+            1,
             "Test",
             "https://pool.img.aptoide.com/catappult/1406ca2b9502fdccb366724e2f5b20e0_fgraphic.png",
             R.drawable.ic_star,
-            2.2f
+            "2.2"
         )
-    )
+    ) {}
 }

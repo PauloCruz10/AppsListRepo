@@ -76,5 +76,8 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.lifecycle.runtime.compose)
     ksp(libs.hilt.compiler)
-    implementation(project(":data"))}
+    implementation(project(":data"))
+    implementation(project(":shareddata"))
+}
