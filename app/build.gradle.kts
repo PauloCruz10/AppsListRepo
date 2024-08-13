@@ -78,6 +78,6 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
     ksp(libs.hilt.compiler)
+    implementation(project(":network"))
     implementation(project(":data"))
-    implementation(project(":shareddata"))
 }

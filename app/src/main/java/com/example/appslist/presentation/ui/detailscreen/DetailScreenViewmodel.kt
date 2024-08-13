@@ -4,7 +4,9 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.appslist.model.ApplicationDetails
 import com.example.network.repository.AppsRepository
+import com.example.shareddata.model.appsList.AppInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
@@ -20,7 +22,7 @@ class DetailScreenViewmodel @Inject constructor(savedStateHandle: SavedStateHand
     private val appFlow = savedStateHandle.getStateFlow<Long?>("id", null).map { appId ->
         Log.d("DetailScreenViewmodel", "id=$appId")
         if (appId != null) {
-            userRepository.getApps()?.responses?.listApps?.datasets?.all?.data?.list?.firstOrNull { it.id == appId}
+            userRepository.getApps()?.responses?.listApps?.datasets?.all?.data?.list?.firstOrNull { it.id == appId}?.toApplicationDetails()
         } else {
             null
         }
@@ -31,3 +33,12 @@ class DetailScreenViewmodel @Inject constructor(savedStateHandle: SavedStateHand
         app
     }.stateIn(viewModelScope, SharingStarted.Lazily, null)
 }
+
+fun AppInfo.toApplicationDetails() = ApplicationDetails(
+    name.orEmpty(),
+    size.toString(),
+    downloads.toString(),
+    updated.toString(),
+    rating.toString(),
+    graphic.orEmpty()
+)
