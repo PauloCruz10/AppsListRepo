@@ -14,6 +14,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -26,9 +27,9 @@ import com.example.appslist.ui.theme.marginxSmall
 import com.example.appslist.ui.theme.marginxxSmall
 
 @Composable
-fun ItemCard(item: AppItem, onAppClick: (id: Long) -> Unit) {
+fun ItemCard(item: AppItem, onAppClick: (id: Long, name: String) -> Unit) {
     Card(
-        onClick = { onAppClick(item.id) },
+        onClick = { onAppClick(item.id, item.name) },
         modifier = Modifier
             .height(180.dp)
             .width(140.dp)
@@ -55,6 +56,7 @@ fun ItemCard(item: AppItem, onAppClick: (id: Long) -> Unit) {
             )
             Column(
                 modifier = Modifier
+                    .fillMaxWidth()
                     .align(Alignment.BottomStart)
                     .padding(marginSmall)
             ) {
@@ -62,7 +64,9 @@ fun ItemCard(item: AppItem, onAppClick: (id: Long) -> Unit) {
                     text = item.name,
                     modifier = Modifier
                         .align(Alignment.Start)
-                        .padding(marginxxSmall)
+                        .padding(marginxxSmall),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
 
                 Row {
@@ -75,7 +79,9 @@ fun ItemCard(item: AppItem, onAppClick: (id: Long) -> Unit) {
                     Text(
                         text = item.name,
                         modifier = Modifier.padding(top = marginxxSmall),
-                        style = Typography.labelSmall
+                        style = Typography.labelSmall,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
                 }
             }
@@ -94,5 +100,7 @@ fun previewItemCard() {
             R.drawable.ic_star,
             "2.2"
         )
-    ) {}
+    ) { _, _ ->
+
+    }
 }

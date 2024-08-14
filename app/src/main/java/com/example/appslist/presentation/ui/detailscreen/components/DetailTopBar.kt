@@ -1,10 +1,9 @@
-package com.example.appslist.presentation.ui.homescreen.components
+package com.example.appslist.presentation.ui.detailscreen.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -18,22 +17,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.appslist.R
 import com.example.appslist.ui.theme.AppListTheme
 import com.example.appslist.ui.theme.lightGreen
-import com.example.appslist.ui.theme.marginxSmall
 import com.example.appslist.ui.theme.oliveGreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar(
+fun DetailTopBar(
     title: String,
-    leftIconResId: Int = R.drawable.ic_store,
-    rightIconResId: Int = R.drawable.ic_account,
-    onIconAction: () -> Unit,
+    onBackAction: () -> Unit,
 ) {
     // TODO remove text
     val gradientColors = listOf(
@@ -47,21 +42,7 @@ fun TopBar(
                 modifier = Modifier.fillMaxWidth()
 
             ) {
-                IconButton(
-                    onClick = {},
-                    modifier = Modifier.padding(start = marginxSmall)
-                ) {
-                    Icon(
-                        painter = painterResource(leftIconResId),
-                        contentDescription = "iconTitle",
-                        modifier = Modifier.size(50.dp),
-                    )
-                }
-                Text(
-                    text = title,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
-                )
+                Text(text = title)
             }
         },
         modifier = Modifier.background(
@@ -70,13 +51,11 @@ fun TopBar(
             )
         ),
         colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
-        actions = {
-            IconButton(
-                onClick = onIconAction
-            ) {
+        navigationIcon = {
+            IconButton(onClick = onBackAction) {
                 Icon(
-                    painter = painterResource(id = rightIconResId),
-                    contentDescription = "End icon",
+                    painter = painterResource(id = R.drawable.ic_back),
+                    contentDescription = "Back",
                     modifier = Modifier.size(50.dp)
                 )
             }
@@ -88,6 +67,6 @@ fun TopBar(
 @Composable
 fun TopBarPreview() {
     AppListTheme {
-        TopBar(title = "WallApps", onIconAction = {})
+        DetailTopBar(title = "WallApps") {}
     }
 }

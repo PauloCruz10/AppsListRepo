@@ -1,6 +1,8 @@
 package com.example.appslist.presentation.ui.homescreen
 
+import android.util.Log
 import android.widget.Toast
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -12,14 +14,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.appslist.R
-import com.example.appslist.presentation.ui.homescreen.components.Body
+import com.example.appslist.presentation.ui.homescreen.components.AllItemsZone
+import com.example.appslist.presentation.ui.homescreen.components.HeaderZone
+import com.example.appslist.presentation.ui.homescreen.components.HighlightedZone
 import com.example.appslist.presentation.ui.homescreen.components.TopBar
+import com.example.appslist.ui.theme.marginNormal
 
 @Composable
-fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel(), onAppSelected: (id: Long) -> Unit = {}) {
+fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel(), onAppSelected: (id: Long, name: String) -> Unit) {
     val context = LocalContext.current
     val appsList = homeViewModel.listAppApps.collectAsStateWithLifecycle()
-    val highlighted = appsList.value.dropLast(5)
+    val highlighted = homeViewModel.highlights.collectAsStateWithLifecycle()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -31,12 +36,30 @@ fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel(), onAppSelected: (i
                 })
         }) { innerPadding ->
 
-        Body(Modifier.padding(innerPadding), "Highlighted", R.drawable.ic_account, highlighted, appsList.value, onAppSelected)
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+                .padding(start = marginNormal)
+        ) {
+            Log.d("aqui", "mano")
+            HeaderZone(Modifier.weight(0.1f), "Highlighted", R.drawable.ic_star)
+            // Editors Choice Zone
+            HighlightedZone(Modifier.weight(0.3f), highlighted.value, onAppSelected) {
+                homeViewModel.loadApps()
+            }
+
+            HeaderZone(Modifier.weight(0.1f), "All Apps", R.drawable.ic_more)
+
+            AllItemsZone(Modifier.weight(0.4f), appsList.value, onAppSelected) {
+                homeViewModel.loadApps()
+            }
+        }
     }
 }
 
 @Preview
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen()
+    HomeScreen() { _, _ -> }
 }

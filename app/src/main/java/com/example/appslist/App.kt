@@ -17,24 +17,27 @@ fun App(
     NavHost(navController = navController, startDestination = "/") {
         composable("/") {
             HomeScreen(
-                onAppSelected = {
-                    navController.navigate("/movie/${it}")
+                onAppSelected = { id, name ->
+                    navController.navigate("/movie/${id}?name=${name}")
                 }
             )
         }
         composable(
-            route = "/movie/{id}",
+            route = "/movie/{id}?name={name}",
             arguments = listOf(
                 navArgument("id") {
                     type = NavType.LongType
+                },
+                navArgument("name") {
+                    type = NavType.StringType
                 }
             )
         ) {
             DetailsScreen(
-                /*backAction = {
+                backAction = {
                     navController.popBackStack()
                     navController.navigate("/")
-                }*/
+                }
             )
         }
     }

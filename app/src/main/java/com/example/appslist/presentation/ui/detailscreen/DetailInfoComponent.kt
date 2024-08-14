@@ -15,21 +15,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.appslist.R
+import com.example.appslist.ui.theme.Typography
 import com.example.appslist.ui.theme.lightGreen
 import com.example.appslist.ui.theme.marginNormal
 import com.example.appslist.ui.theme.marginxSmall
 import com.example.appslist.ui.theme.marginxxSmall
 
 @Composable
-fun DetailInfoComponent(label: String, value: String, icon: Int) {
+fun DetailInfoComponent(label: Int, value: String, icon: Int) {
     Column(modifier = Modifier.padding(start = marginNormal, end = marginNormal, bottom = marginNormal)) {
         Row(horizontalArrangement = Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
             Box(
                 modifier = Modifier
-                    .size(50.dp)
+                    .size(40.dp)
                     .clip(CircleShape)
                     .background(lightGreen),
                 contentAlignment = Alignment.Center
@@ -37,17 +39,25 @@ fun DetailInfoComponent(label: String, value: String, icon: Int) {
                 Icon(
                     painter = painterResource(icon),
                     contentDescription = "iconTitle",
-                    modifier = Modifier.size(40.dp),
+                    modifier = Modifier.size(30.dp),
                 )
             }
-            Text(label, modifier = Modifier.padding(top = marginxxSmall, start = marginxSmall))
+            Text(
+                text = stringResource(label),
+                modifier = Modifier.padding(top = marginxxSmall, start = marginxSmall),
+                style = Typography.bodyLarge,
+            )
         }
-        Text(text = value, modifier = Modifier.padding(start = marginxxSmall, end = marginNormal, top = marginxxSmall))
+        Text(
+            text = value,
+            modifier = Modifier.padding(start = marginxxSmall, end = marginNormal, top = marginxxSmall),
+            style = Typography.bodyMedium
+        )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun previewDetailInfoComponent() {
-    DetailInfoComponent("Name", "John Doe", R.drawable.ic_store)
+    DetailInfoComponent(R.string.detail_name, "John Doe", R.drawable.ic_store)
 }

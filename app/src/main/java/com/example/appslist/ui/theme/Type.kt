@@ -30,7 +30,7 @@ val Typography = Typography(
         fontSize = 16.sp,
         lineHeight = 20.sp,
         letterSpacing = 0.sp,
-        color = GreenLight
+        color = Color.White,
     ),
     labelSmall = TextStyle(
         fontFamily = FontFamily.Default,
