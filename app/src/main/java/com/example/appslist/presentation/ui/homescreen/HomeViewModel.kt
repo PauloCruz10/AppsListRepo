@@ -24,14 +24,20 @@ class HomeViewModel @Inject constructor(private val userRepository: AppsReposito
 
     init {
         Log.d("HomeViewModel", "init")
-        loadApps()
+        viewModelScope.launch(Dispatchers.Default) {
+            userRepository.loadApps()
+        }
+
+        viewModelScope.launch(Dispatchers.Default) {
+           userRepository.getApps().collect {
+               _listAppApps.emit(it)
+           }
+        }
     }
 
     fun loadApps() {
         viewModelScope.launch(Dispatchers.Default) {
-            _listAppApps.emit(Resource.Loading())
-            val apps = handleResult(userRepository.getApps())
-            _listAppApps.emit(apps)
+            userRepository.loadApps()
         }
     }
 

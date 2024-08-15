@@ -22,6 +22,9 @@ class DetailScreenViewmodel @Inject constructor(savedStateHandle: SavedStateHand
     val name by lazy { savedStateHandle.get<String>("name").orEmpty() }
     private val appId by lazy { savedStateHandle.get<Long>("id") ?: -1L }
 
+    private val _showDialog = MutableStateFlow(false)
+    val showDialog = _showDialog.asStateFlow()
+
     init {
         Log.d("DetailScreenViewmodel", "init")
         loadApp(appId)
@@ -32,9 +35,18 @@ class DetailScreenViewmodel @Inject constructor(savedStateHandle: SavedStateHand
 
     fun loadApp(appId: Long = this.appId) {
         viewModelScope.launch(Dispatchers.IO) {
-            _currentApp.emit(Resource.Loading())
-            _currentApp.emit(handleResult(userRepository.getAppById(appId)))
+            userRepository.getAppById(appId).collect {
+                _currentApp.emit(handleResult(it))
+            }
         }
+    }
+
+    fun showDialog() {
+        _showDialog.tryEmit(true)
+    }
+
+    fun hideDialog() {
+        _showDialog.tryEmit(false)
     }
 
     private fun handleResult(info: Resource<AppInfo>): Resource<ApplicationDetails> {
@@ -47,6 +59,7 @@ class DetailScreenViewmodel @Inject constructor(savedStateHandle: SavedStateHand
 
     private fun AppInfo.toAppDetailItem(): List<AppDetailItem> {
         return listOf(
+            AppDetailItem(name.toString(), AppDetailType.NAME),
             AppDetailItem(size.toString().formatSize(), AppDetailType.SIZE),
             AppDetailItem(downloads.toString(), AppDetailType.DOWNLOAD),
             AppDetailItem(updated.orEmpty().getFormattedDate(), AppDetailType.LAST_UPDATED),
@@ -63,6 +76,7 @@ class DetailScreenViewmodel @Inject constructor(savedStateHandle: SavedStateHand
 data class AppDetailItem(val detailedInfo: String, val type: AppDetailType)
 
 enum class AppDetailType {
+    NAME,
     SIZE,
     DOWNLOAD,
     LAST_UPDATED,

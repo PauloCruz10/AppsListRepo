@@ -1,47 +1,91 @@
 package com.example.network.repository
 
+import android.util.Log
 import com.example.network.api.ListAppsApi
+import com.example.network.mappers.mapToAppInfoList
+import com.example.network.mappers.mapToEntity
 import com.example.network.mappers.mapToLib
 import com.example.shareddata.common.Resource
-import com.example.shareddata.model.appsList.AllAppsInfo
+import com.example.shareddata.db.dao.AppInfoDao
 import com.example.shareddata.model.appsList.AppInfo
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Delay
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
 import javax.inject.Inject
 import kotlin.random.Random
 
-class AppsRepositoryImplement @Inject constructor(private val listAppsApi: ListAppsApi) : AppsRepository {
-    override suspend fun getApps(): Resource<List<AppInfo>> {
+/**
+ * Implementation of [AppsRepository]
+ */
+class AppsRepositoryImplement @Inject constructor(private val listAppsApi: ListAppsApi, private val appInfoDao: AppInfoDao) : AppsRepository {
+    /**
+     * Loads the apps from the network, and save into the database.
+     * The consumers will be notified when collecting to the flow provided by room engine
+     */
+    override suspend fun loadApps(): Resource<Unit> {
         return withDelay {
-            val response = listAppsApi.getAll()
-            val body = response.body()
-            if (response.isSuccessful && body != null) {
-                val apps = body.mapToLib().responses?.listApps?.datasets?.all?.data?.list
-                if (apps != null) Resource.Success(apps) else Resource.Failure()
-            } else {
+            try {
+                val response = listAppsApi.getAll()
+                val body = if (!response.isSuccessful) return@withDelay Resource.Failure() else response.body()
+                if (body != null) {
+                    val apps = body.responses?.listApps?.datasets?.all?.data?.list?.mapToEntity()
+                    if (apps != null) {
+                        apps.forEach { app ->
+                            Log.d("loadApps", "app=$app")
+                            appInfoDao.insertApp(app)
+                        }
+                        Resource.Success(Unit)
+                    } else {
+                        Log.d("loadApps", "empty body")
+                        Resource.Failure()
+                    }
+                } else {
+                    Resource.Failure()
+                }
+            } catch (e: Exception) {
+                Log.e("loadApps", "unable to load the apps", e)
                 Resource.Failure()
             }
         }
     }
 
-    override suspend fun getAppById(id: Long): Resource<AppInfo> {
-        val appsResource = getApps()
-        return handleResult(id, appsResource)
+    /**
+     * Gets all apps from the database with flow. Listeners will be notified on any changes
+     */
+    override suspend fun getApps(): Flow<Resource<List<AppInfo>>> {
+        return flow {
+            emit(Resource.Loading())
+
+            emitAll(
+                appInfoDao.getAllAppsFlow().map { apps ->
+                    Log.d("getAppById", "apps=$apps")
+                    Resource.Success(apps.mapToAppInfoList())
+                }
+            )
+        }.flowOn(Dispatchers.IO)
     }
 
-    private fun handleResult(appId: Long, info: Resource<List<AppInfo>>): Resource<AppInfo> {
-        return when (info) {
-            is Resource.Success -> {
-                val app = info.data.firstOrNull { it.id == appId}
-                if (app != null) Resource.Success(app) else Resource.Failure()
-            }
-            is Resource.Failure -> Resource.Failure()
-            is Resource.Loading -> Resource.Loading()
-        }
+    /**
+     * Get app for a given[id] with flow
+     */
+    override suspend fun getAppById(id: Long): Flow<Resource<AppInfo>> {
+        return flow {
+            emit(Resource.Loading())
+
+            emitAll(
+                appInfoDao.getAppByIdFlow(id.toString()).map { app ->
+                    Log.d("getAppById", "app=$app")
+                    if (app == null) Resource.Failure() else Resource.Success(app.mapToLib())
+                }
+            )
+        }.flowOn(Dispatchers.IO)
     }
 }
 

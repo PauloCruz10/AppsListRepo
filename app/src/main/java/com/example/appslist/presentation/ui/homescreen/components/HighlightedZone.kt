@@ -33,7 +33,7 @@ private fun Success(modifier: Modifier, editorsChoiceItems: List<AppInfo>, onApp
         items(editorsChoiceItems) { item ->
             HighLightedCard(
                 AppItem(
-                    item.id ?: -1,
+                    item.id,
                     item.name.orEmpty(),
                     item.graphic.orEmpty(),
                     R.drawable.ic_star,

@@ -26,5 +26,8 @@ android {
 
 dependencies {
     implementation(libs.hilt.android)
+    implementation(libs.room.android)
+    implementation(libs.room.android.ktx)
     ksp(libs.hilt.compiler)
+    ksp(libs.room.compiler.android)
 }

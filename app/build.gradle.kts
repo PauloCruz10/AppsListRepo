@@ -77,7 +77,10 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.room.android)
+    implementation(libs.room.android.ktx)
     ksp(libs.hilt.compiler)
+    ksp(libs.room.compiler.android)
     implementation(project(":network"))
     implementation(project(":data"))
 }

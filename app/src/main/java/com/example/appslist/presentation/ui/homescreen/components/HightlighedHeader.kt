@@ -22,7 +22,9 @@ fun HeaderZone(modifier: Modifier, text: String, icon: Int) {
     ) {
         Text(
             text = text,
-            modifier = Modifier.weight(1f).padding(end = marginNormal)
+            modifier = Modifier
+                .weight(1f)
+                .padding(end = marginNormal)
         )
         Spacer(modifier = Modifier.width(marginNormal))
         Icon(

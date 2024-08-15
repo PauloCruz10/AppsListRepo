@@ -1,6 +1,7 @@
 package com.example.network.repository
 
 import com.example.network.api.ListAppsApi
+import com.example.shareddata.db.dao.AppInfoDao
 import dagger.Provides
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -25,7 +26,7 @@ object NetworkModule {
     }
 
     @Provides
-    fun provideUserRepository(apiService: ListAppsApi): AppsRepository {
-        return AppsRepositoryImplement(apiService)
+    fun provideUserRepository(apiService: ListAppsApi, appInfoDao: AppInfoDao): AppsRepository {
+        return AppsRepositoryImplement(apiService, appInfoDao)
     }
 }

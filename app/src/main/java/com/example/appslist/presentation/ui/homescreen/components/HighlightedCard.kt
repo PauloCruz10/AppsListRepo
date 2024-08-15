@@ -19,6 +19,7 @@ import coil.compose.AsyncImage
 import com.example.appslist.model.AppItem
 import com.example.appslist.R
 import com.example.appslist.ui.theme.Typography
+import com.example.appslist.ui.theme.highlightedCardSize
 import com.example.appslist.ui.theme.marginNormal
 import com.example.appslist.ui.theme.marginxSmall
 import com.example.appslist.ui.theme.marginxxSmall
@@ -29,7 +30,7 @@ fun HighLightedCard(item: AppItem, onAppClick: (id: Long, name: String) -> Unit)
     Card(
         onClick = { onAppClick(item.id, item.name) },
         modifier = Modifier
-            .width(300.dp)
+            .width(highlightedCardSize)
             .fillMaxHeight()
             .padding(end = marginNormal),
         shape = RoundedCornerShape(marginxSmall),
@@ -39,10 +40,12 @@ fun HighLightedCard(item: AppItem, onAppClick: (id: Long, name: String) -> Unit)
             modifier = Modifier.fillMaxSize()
         ) {
             AsyncImage(
+                modifier = Modifier.fillMaxSize(),
                 model = item.image,
                 contentDescription = null,
+                error = painterResource(R.drawable.ic_placeholder),
+                placeholder = painterResource(R.drawable.ic_placeholder),
                 contentScale = ContentScale.FillBounds,
-                modifier = Modifier.fillMaxSize(),
             )
             Column(
                 verticalArrangement = Arrangement.Center,

@@ -1,5 +1,6 @@
 package com.example.appslist.presentation.ui.detailscreen
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,8 +10,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,6 +23,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -26,30 +32,54 @@ import com.example.appslist.R
 import com.example.appslist.model.ApplicationDetails
 import com.example.appslist.presentation.ui.common.Error
 import com.example.appslist.presentation.ui.detailscreen.components.DetailTopBar
+import com.example.appslist.ui.theme.lightGreen
 import com.example.appslist.ui.theme.marginNormal
 import com.example.appslist.ui.theme.marginxSmall
+import com.example.appslist.ui.theme.oliveGreen
 import com.example.shareddata.common.Resource
 import com.example.shareddata.common.isLoading
 
 @Composable
 fun DetailsScreen(backAction: () -> Unit, detailScreenViewmodel: DetailScreenViewmodel = hiltViewModel()) {
     val appDetailsResource = detailScreenViewmodel.currentApp.collectAsStateWithLifecycle().value
+    val showDialog = detailScreenViewmodel.showDialog.collectAsStateWithLifecycle().value
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         containerColor = Color.White,
         topBar = {
             DetailTopBar(detailScreenViewmodel.name, backAction)
-        }) { innerPadding ->
-
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                containerColor = lightGreen,
+                onClick = {
+                    detailScreenViewmodel.showDialog()
+                }
+            ) {
+                Icon(painterResource(id = R.drawable.ic_download), contentDescription = "Download")
+            }
+        },
+    ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {
+            if (showDialog) {
+                AlertDialog(
+                    title = { Text(text = stringResource(id = R.string.feature_not_available)) },
+                    text = { Text(text = stringResource(id = R.string.download_not_available)) },
+                    onDismissRequest = { detailScreenViewmodel.hideDialog() },
+                    confirmButton = {},
+                    containerColor = oliveGreen,
+                )
+            }
             when {
                 appDetailsResource.isLoading() -> {
                     Loading(modifier = Modifier.fillMaxSize())
                 }
+
                 appDetailsResource is Resource.Success -> {
                     Success(appDetails = appDetailsResource.data)
                 }
+
                 appDetailsResource is Resource.Failure -> {
                     Error(modifier = Modifier.fillMaxSize()) {
                         detailScreenViewmodel.loadApp()
@@ -72,7 +102,6 @@ private fun Success(appDetails: ApplicationDetails) {
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
-
         item {
             Box(
                 Modifier.padding(marginNormal)
@@ -80,6 +109,8 @@ private fun Success(appDetails: ApplicationDetails) {
                 AsyncImage(
                     model = appDetails.image,
                     contentDescription = null,
+                    error = painterResource(R.drawable.ic_placeholder),
+                    placeholder = painterResource(R.drawable.ic_placeholder),
                     contentScale = ContentScale.FillBounds,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -99,28 +130,19 @@ private fun Success(appDetails: ApplicationDetails) {
     }
 }
 
-@Composable
-private fun Error(modifier: Modifier = Modifier) {
-    Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Image(
-            painter = painterResource(id = R.drawable.ic_error),
-            contentDescription = "My GIF",
-            contentScale = ContentScale.Fit
-        )
-    }
-}
-
 private fun getIconForType(type: AppDetailType): Int {
     return when (type) {
-        AppDetailType.SIZE -> R.drawable.ic_store
-        AppDetailType.DOWNLOAD -> R.drawable.ic_star
-        AppDetailType.LAST_UPDATED -> R.drawable.ic_more
-        AppDetailType.RATING -> R.drawable.ic_account
+        AppDetailType.NAME -> R.drawable.ic_name
+        AppDetailType.SIZE -> R.drawable.ic_weight
+        AppDetailType.DOWNLOAD -> R.drawable.ic_downloads
+        AppDetailType.LAST_UPDATED -> R.drawable.ic_time
+        AppDetailType.RATING -> R.drawable.ic_star
     }
 }
 
 private fun getLabelForType(type: AppDetailType): Int {
     return when (type) {
+        AppDetailType.NAME -> R.string.detail_name
         AppDetailType.SIZE -> R.string.detail_size
         AppDetailType.DOWNLOAD -> R.string.detail_downloads
         AppDetailType.LAST_UPDATED -> R.string.detail_last_updated

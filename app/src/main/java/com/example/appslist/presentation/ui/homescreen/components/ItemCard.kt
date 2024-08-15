@@ -21,6 +21,8 @@ import coil.compose.AsyncImage
 import com.example.appslist.model.AppItem
 import com.example.appslist.R
 import com.example.appslist.ui.theme.Typography
+import com.example.appslist.ui.theme.itemCardHeight
+import com.example.appslist.ui.theme.itemCardWidth
 import com.example.appslist.ui.theme.marginNormal
 import com.example.appslist.ui.theme.marginSmall
 import com.example.appslist.ui.theme.marginxSmall
@@ -31,8 +33,8 @@ fun ItemCard(item: AppItem, onAppClick: (id: Long, name: String) -> Unit) {
     Card(
         onClick = { onAppClick(item.id, item.name) },
         modifier = Modifier
-            .height(180.dp)
-            .width(140.dp)
+            .height(itemCardHeight)
+            .width(itemCardWidth)
             .padding(end = marginNormal)
             .border(width = 1.dp, color = Color.LightGray, shape = RoundedCornerShape(marginSmall)),
         shape = RoundedCornerShape(marginSmall),
@@ -43,16 +45,17 @@ fun ItemCard(item: AppItem, onAppClick: (id: Long, name: String) -> Unit) {
             modifier = Modifier.fillMaxSize()
         ) {
             AsyncImage(
-                model = item.image,
-                contentDescription = null,
-                contentScale = ContentScale.FillBounds,
-                placeholder = painterResource(R.drawable.ic_account),
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight(0.6f)
                     .align(Alignment.TopStart)
                     .padding(marginSmall)
-                    .clip(RoundedCornerShape(marginxSmall))
+                    .clip(RoundedCornerShape(marginxSmall)),
+                model = item.image,
+                contentDescription = null,
+                contentScale = ContentScale.FillBounds,
+                error = painterResource(R.drawable.ic_placeholder),
+                placeholder = painterResource(R.drawable.ic_placeholder),
             )
             Column(
                 modifier = Modifier

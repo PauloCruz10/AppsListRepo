@@ -1,7 +1,7 @@
 package com.example.shareddata.model.appsList
 
 data class AppInfo(
-    val id: Long? = null,
+    val id: Long,
     val name: String? = null,
     val appPackage: String? = null,
     val storeId: Int? = null,
@@ -9,7 +9,7 @@ data class AppInfo(
     val vername: String? = null,
     val vercode: Int? = null,
     val md5sum: String? = null,
-    val apkTags: ArrayList<String> = arrayListOf(),
+    val apkTags: List<String> = listOf(),
     val size: Int? = null,
     val downloads: Int? = null,
     val pdownloads: Int? = null,
