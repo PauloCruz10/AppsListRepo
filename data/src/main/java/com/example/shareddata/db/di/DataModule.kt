@@ -2,8 +2,11 @@ package com.example.shareddata.db.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.network.api.ListAppsApi
 import com.example.shareddata.db.dao.AppInfoDao
 import com.example.shareddata.db.database.AppDatabase
+import com.example.shareddata.repository.AppsRepository
+import com.example.shareddata.repository.AppsRepositoryImplement
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,7 +16,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DatabaseModule {
+object DataModule {
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): AppDatabase {
@@ -28,5 +31,10 @@ object DatabaseModule {
     @Singleton
     fun provideAppInfoDao(db: AppDatabase): AppInfoDao {
         return db.appInfoDao()
+    }
+
+    @Provides
+    fun provideAppsRepository(apiService: ListAppsApi, appInfoDao: AppInfoDao): AppsRepository {
+        return AppsRepositoryImplement(apiService, appInfoDao)
     }
 }

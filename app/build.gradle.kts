@@ -81,6 +81,5 @@ dependencies {
     implementation(libs.room.android.ktx)
     ksp(libs.hilt.compiler)
     ksp(libs.room.compiler.android)
-    implementation(project(":network"))
     implementation(project(":data"))
 }

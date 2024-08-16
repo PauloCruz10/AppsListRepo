@@ -1,11 +1,11 @@
-package com.example.network.repository
+package com.example.network
 
 import com.example.network.api.ListAppsApi
-import com.example.shareddata.db.dao.AppInfoDao
 import dagger.Provides
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -26,7 +26,7 @@ object NetworkModule {
     }
 
     @Provides
-    fun provideUserRepository(apiService: ListAppsApi, appInfoDao: AppInfoDao): AppsRepository {
-        return AppsRepositoryImplement(apiService, appInfoDao)
+    fun provideOkHttpClient(): OkHttpClient {
+        return OkHttpClient.Builder().build()
     }
 }

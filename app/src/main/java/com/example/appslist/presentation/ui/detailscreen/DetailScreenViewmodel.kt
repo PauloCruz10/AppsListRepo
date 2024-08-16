@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.appslist.common.formatSize
 import com.example.appslist.common.getFormattedDate
 import com.example.appslist.model.ApplicationDetails
-import com.example.network.repository.AppsRepository
+import com.example.shareddata.repository.AppsRepository
 import com.example.shareddata.common.Resource
 import com.example.shareddata.model.appsList.AppInfo
 import dagger.hilt.android.lifecycle.HiltViewModel

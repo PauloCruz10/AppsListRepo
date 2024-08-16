@@ -1,4 +1,4 @@
-package com.example.network.mappers
+package com.example.shareddata.mappers
 
 import com.example.network.model.ListDto
 import com.example.shareddata.db.entity.AppEntity

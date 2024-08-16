@@ -1,4 +1,4 @@
-package com.example.network.repository
+package com.example.shareddata.repository
 
 import com.example.shareddata.common.Resource
 import com.example.shareddata.model.appsList.AppInfo

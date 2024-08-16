@@ -28,6 +28,8 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.room.android)
     implementation(libs.room.android.ktx)
+    implementation(libs.hilt.android)
+    implementation(project(":network"))
     ksp(libs.hilt.compiler)
     ksp(libs.room.compiler.android)
 }

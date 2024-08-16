@@ -3,7 +3,7 @@ package com.example.appslist.presentation.ui.homescreen
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.network.repository.AppsRepository
+import com.example.shareddata.repository.AppsRepository
 import com.example.shareddata.common.Resource
 import com.example.shareddata.model.appsList.AppInfo
 import dagger.hilt.android.lifecycle.HiltViewModel

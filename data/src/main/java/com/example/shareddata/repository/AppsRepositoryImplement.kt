@@ -1,12 +1,12 @@
-package com.example.network.repository
+package com.example.shareddata.repository
 
 import android.util.Log
 import com.example.network.api.ListAppsApi
-import com.example.network.mappers.mapToAppInfoList
-import com.example.network.mappers.mapToEntity
-import com.example.network.mappers.mapToLib
 import com.example.shareddata.common.Resource
 import com.example.shareddata.db.dao.AppInfoDao
+import com.example.shareddata.mappers.mapToAppInfoList
+import com.example.shareddata.mappers.mapToEntity
+import com.example.shareddata.mappers.mapToLib
 import com.example.shareddata.model.appsList.AppInfo
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +17,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-
 import javax.inject.Inject
 import kotlin.random.Random
 
@@ -89,9 +88,6 @@ class AppsRepositoryImplement @Inject constructor(private val listAppsApi: ListA
     }
 }
 
-/**
- * Mock some delay on [task] execution
- */
 private suspend fun <T> withDelay(
     delayInMilSec: Long = Random.nextLong(300, 1500),
     coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO,

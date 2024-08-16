@@ -25,11 +25,9 @@ android {
 
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.retrofit)
+    api(libs.retrofit)
     implementation(libs.retrofit.gjson)
-    implementation(libs.okhhtp3)
+    api(libs.okhhtp3)
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
-    implementation(project(":data"))
 }
