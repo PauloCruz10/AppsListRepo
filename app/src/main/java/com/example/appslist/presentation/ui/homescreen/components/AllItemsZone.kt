@@ -37,7 +37,7 @@ private fun Success(modifier: Modifier, allApps: List<AppInfo>, onAppClick: (id:
         items(allApps) { item ->
             ItemCard(
                 AppItem(
-                    item.id ?: -1,
+                    item.id,
                     item.name.orEmpty(),
                     item.graphic.orEmpty(),
                     R.drawable.ic_star,
