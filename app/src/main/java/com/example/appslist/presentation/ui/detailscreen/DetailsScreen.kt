@@ -29,6 +29,7 @@ import coil.compose.AsyncImage
 import com.example.appslist.R
 import com.example.appslist.model.ApplicationDetails
 import com.example.appslist.presentation.ui.common.Error
+import com.example.appslist.presentation.ui.detailscreen.components.DetailInfoComponent
 import com.example.appslist.presentation.ui.detailscreen.components.DetailTopBar
 import com.example.appslist.ui.theme.lightGreen
 import com.example.appslist.ui.theme.marginNormal

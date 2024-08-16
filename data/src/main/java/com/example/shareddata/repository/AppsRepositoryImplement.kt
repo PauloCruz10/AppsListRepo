@@ -1,9 +1,9 @@
 package com.example.shareddata.repository
 
-import android.util.Log
 import com.example.network.api.ListAppsApi
 import com.example.shareddata.common.Resource
 import com.example.shareddata.db.dao.AppInfoDao
+import com.example.shareddata.logger.Logger
 import com.example.shareddata.mappers.mapToAppInfoList
 import com.example.shareddata.mappers.mapToEntity
 import com.example.shareddata.mappers.mapToLib
@@ -37,19 +37,20 @@ class AppsRepositoryImplement @Inject constructor(private val listAppsApi: ListA
                     val apps = body.responses?.listApps?.datasets?.all?.data?.list?.mapToEntity()
                     if (apps != null) {
                         apps.forEach { app ->
-                            Log.d("loadApps", "app=$app")
+                            Logger.d("loadApps", "app=$app")
                             appInfoDao.insertApp(app)
                         }
                         Resource.Success(Unit)
                     } else {
-                        Log.d("loadApps", "empty body")
+                        Logger.d("loadApps", "empty body")
                         Resource.Failure()
                     }
                 } else {
                     Resource.Failure()
                 }
             } catch (e: Exception) {
-                Log.e("loadApps", "unable to load the apps", e)
+                println("dude e=$e")
+                Logger.e("loadApps", "unable to load the apps", "$e")
                 Resource.Failure()
             }
         }
@@ -64,7 +65,7 @@ class AppsRepositoryImplement @Inject constructor(private val listAppsApi: ListA
 
             emitAll(
                 appInfoDao.getAllAppsFlow().map { apps ->
-                    Log.d("getAppById", "apps=$apps")
+                    Logger.d("getApps", "apps=$apps")
                     Resource.Success(apps.mapToAppInfoList())
                 }
             )
@@ -80,7 +81,7 @@ class AppsRepositoryImplement @Inject constructor(private val listAppsApi: ListA
 
             emitAll(
                 appInfoDao.getAppByIdFlow(id.toString()).map { app ->
-                    Log.d("getAppById", "app=$app")
+                    Logger.d("getAppById", "app=$app")
                     if (app == null) Resource.Failure() else Resource.Success(app.mapToLib())
                 }
             )

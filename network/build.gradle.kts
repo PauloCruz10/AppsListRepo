@@ -30,4 +30,5 @@ dependencies {
     api(libs.okhhtp3)
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
+    kspTest(libs.hilt.compiler)
 }

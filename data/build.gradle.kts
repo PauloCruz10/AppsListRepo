@@ -30,6 +30,19 @@ dependencies {
     implementation(libs.room.android.ktx)
     implementation(libs.hilt.android)
     implementation(project(":network"))
+    implementation(libs.androidx.junit.ktx)
     ksp(libs.hilt.compiler)
     ksp(libs.room.compiler.android)
+
+    testImplementation (libs.mockito.core)
+    androidTestImplementation (libs.mockito.core)
+
+    // Testing dependencies
+    testImplementation(libs.junit)
+    testImplementation(libs.ktx.coroutines.test) // Replace with your Coroutines version
+
+    // Required by the Hilt Testing library
+    androidTestImplementation(libs.androidx.arch.core.test)
+    androidTestImplementation(libs.androidx.test.core.test)
+    androidTestImplementation(libs.androidx.junit)
 }

@@ -81,5 +81,8 @@ dependencies {
     implementation(libs.room.android.ktx)
     ksp(libs.hilt.compiler)
     ksp(libs.room.compiler.android)
+    kspTest(libs.hilt.compiler)
+    // Hilt testing dependencies
+    testImplementation ("com.google.dagger:hilt-android-testing:2.48")
     implementation(project(":data"))
 }

@@ -1,5 +1,4 @@
 [versions]
-activity = "1.9.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
@@ -12,17 +11,21 @@ okhttp = "4.9.3"
 activityCompose = "1.9.0"
 coilCompose = "2.6.0"
 compose-bom = "2024.06.00"
-compose-foundation = "1.7.0-beta04"
 core-ktx = "1.13.1"
 hiltAndroid = "2.48"
 hiltNavigationCompose = "1.2.0"
 kotlin = "2.0.0"
 lifecycleViewmodelCompose = "2.8.4"
-navigationCompose = "2.7.7"
 androidApplication = "8.4.2"
 ksp = "2.0.0-1.0.22"
 kotlin-dsl = "4.4.0"
 room = "2.5.0"
+junitKtx = "1.2.1"
+mokito = "4.11.0"
+ktx-coroutines-test = "1.6.4"
+androidx-arch-core-test = "2.1.0"
+androidx-test-core = "1.4.0"
+
 
 [libraries]
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "core-ktx" }
@@ -31,7 +34,6 @@ androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "j
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 
-androidx-activity = { module = "androidx.activity:activity", version.ref = "activity" }
 androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
@@ -47,12 +49,8 @@ okhhtp3 = { group = "com.squareup.okhttp3", name = "logging-interceptor", versio
 
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
 androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "compose-bom" }
-androidx-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose-foundation" }
-androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
-androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
 androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycleViewmodelCompose" }
-androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltAndroid" }
@@ -60,6 +58,12 @@ room-android = { module = "androidx.room:room-runtime", version.ref = "room"}
 room-compiler-android = { module = "androidx.room:room-compiler", version.ref = "room"}
 room-android-ktx = { module = "androidx.room:room-ktx", version.ref = "room"}
 
+androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junitKtx" }
+
+mockito-core = {group = "org.mockito",  name="mockito-core", version.ref = "mokito" }
+ktx-coroutines-test = {group = "org.jetbrains.kotlinx",  name="kotlinx-coroutines-test", version.ref = "ktx-coroutines-test" }
+androidx-arch-core-test = {group = "androidx.arch.core",  name="core-testing", version.ref = "androidx-arch-core-test" }
+androidx-test-core-test = {group = "androidx.test", name="core", version.ref = "androidx-test-core" }
 
 
 [plugins]

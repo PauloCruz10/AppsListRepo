@@ -11,3 +11,5 @@ val highlightedCardSize = 300.dp
 val itemCardHeight = 180.dp
 val itemCardWidth = 140.dp
 
+val detailComponentIcon = 40.dp
+

@@ -1,4 +1,4 @@
-package com.example.appslist.presentation.ui.detailscreen
+package com.example.appslist.presentation.ui.detailscreen.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.appslist.R
 import com.example.appslist.ui.theme.Typography
+import com.example.appslist.ui.theme.detailComponentIcon
 import com.example.appslist.ui.theme.lightGreen
 import com.example.appslist.ui.theme.marginNormal
 import com.example.appslist.ui.theme.marginxSmall
@@ -31,7 +32,7 @@ fun DetailInfoComponent(label: Int, value: String, icon: Int) {
         Row(horizontalArrangement = Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
             Box(
                 modifier = Modifier
-                    .size(40.dp)
+                    .size(detailComponentIcon)
                     .clip(CircleShape)
                     .background(lightGreen),
                 contentAlignment = Alignment.Center
